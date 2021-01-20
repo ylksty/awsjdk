@@ -1,3 +1,3 @@
 # Introduction
 
-# [book](zjdk/SUMMARY.md)
+# [ThinkJava](https://github.com/ylksty/thinkJava)

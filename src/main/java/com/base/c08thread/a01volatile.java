@@ -1,4 +1,4 @@
-package joe.util.concurrent;
+package com.base.c08thread;
 
 import org.junit.Test;
 
@@ -7,9 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author joe
- * @create 2021-01-15 15:29
+ * @create 2021-01-20 20:48
  */
-public class VolatileTest {
+/*
+volatile 保证可见性
+ */
+public class a01volatile {
     public static class Foo{
         int numNo = 0;
         volatile int num = 0;
@@ -24,11 +27,17 @@ public class VolatileTest {
         }
     }
 
+    public static void main(String[] args) {
+//        test1();
+//        test2();
+//        test3();
+        test4();
+    }
+
     /*
-    volatile 保证可见性
+    不可见demo
      */
-    @Test
-    public void test1() {
+    public static void test1() {
         Foo foo = new Foo();
         new Thread(() -> {
             // 延迟，为了保证后面的线程执行，再修改值
@@ -46,8 +55,7 @@ public class VolatileTest {
     volatile 不保证原子性
     AtomicInterger 保证原子性
      */
-    @Test
-    public void test2() {
+    public static void test2() {
         Foo foo = new Foo();
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
@@ -66,8 +74,7 @@ public class VolatileTest {
     哪里用到 volatile
     没有 DCL双端加锁机制
      */
-    @Test
-    public void test3() {
+    public static void test3() {
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
                 SingletonDemo.getInstance();
@@ -80,8 +87,7 @@ public class VolatileTest {
     哪里用到 volatile
     单例模式DCL（Double Check Lock 双端检锁机制）在加锁前和加锁后都进行一次判断
      */
-    @Test
-    public void test4() {
+    public static void test4() {
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
                 SingletonDemo.getInstanceDCL();
@@ -128,4 +134,3 @@ public class VolatileTest {
         }
     }
 }
-
