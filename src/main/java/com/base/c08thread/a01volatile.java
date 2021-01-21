@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @create 2021-01-20 20:48
  */
 /*
-volatile 保证可见性
+一、Volatile
  */
 public class a01volatile {
     public static class Foo{
@@ -28,14 +28,14 @@ public class a01volatile {
     }
 
     public static void main(String[] args) {
-//        test1();
-//        test2();
-//        test3();
-        test4();
+//        test1(); // 不可见问题
+        test2(); // 解决不可见，不保证原子性，AtomicInterger解决
+//        test3(); // volatile应用，单例模式
+//        test4();
     }
 
     /*
-    不可见demo
+    不可见问题
      */
     public static void test1() {
         Foo foo = new Foo();
@@ -52,8 +52,8 @@ public class a01volatile {
     }
 
     /*
-    volatile 不保证原子性
-    AtomicInterger 保证原子性
+    volatile 解决不可见，不保证原子性
+    AtomicInterger 解决，不保证原子性
      */
     public static void test2() {
         Foo foo = new Foo();
@@ -66,12 +66,12 @@ public class a01volatile {
         }
         // 保证线程结束
         try { TimeUnit.SECONDS.sleep(2); } catch (InterruptedException e) { e.printStackTrace(); }
-        System.out.println("foo.num = " + foo.num);
-        System.out.println("foo.atomicIntegerNum = " + foo.atomicIntegerNum);
+        System.out.println(foo.num);
+        System.out.println(foo.atomicIntegerNum);
     }
 
     /*
-    哪里用到 volatile
+    哪里用到 volatile？ 单例模式DCL
     没有 DCL双端加锁机制
      */
     public static void test3() {
@@ -84,7 +84,6 @@ public class a01volatile {
     }
 
     /*
-    哪里用到 volatile
     单例模式DCL（Double Check Lock 双端检锁机制）在加锁前和加锁后都进行一次判断
      */
     public static void test4() {
